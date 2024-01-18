@@ -42,14 +42,20 @@ const StatePage = () => {
 
     if (data === undefined) {
         return (
-            <div>
-                <h1>Loading...</h1>
+            <div className="flex items-center justify-center h-[80vh] fill-white">
+                <img src="../../../public/spinner-svgrepo-com.svg" alt="spinner" className="animate-spin w-[40px] h-[40px]" />
             </div>
         )
     }
 
     return (
         <div className="text-xl py-4 px-6 flex flex-col gap-4">
+            <div className="flex gap-6 items-center justify-center">
+                <input type="text" name="" id="" className="py-2 px-4 border-none outline-none text-[16px]" placeholder="Search By Country Name" />
+                <div className="cursor-pointer">
+                    <img src="../../../public/search-alt-2-svgrepo-com.svg" alt="Search" className="w-[30px] h-[30px] fill-slate-50 hover:scale-125 ease-in-out duration-200" />
+                </div>
+            </div>
             {data.map((item, index) => (
                 <div key={index} className="border border-white py-6 px-4 flex justify-between items-center">
                     <div className="w-[15%]">
