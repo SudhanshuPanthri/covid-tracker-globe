@@ -4,27 +4,15 @@ import { PiSpinnerBold } from "react-icons/pi";
 
 const StatePage = () => {
     const [data, setData] = useState();
-    // const url = "https://data.covid19india.org/v4/min/data.min.json";
-    // const options = {
-    //     method: 'GET',
-    //     // mode: 'no-cors'
-    // }
-
-    // const url = 'https://covid-19-statistics.p.rapidapi.com/regions';
-    // const options = {
-    //     method: 'GET',
-    //     headers: {
-    //         'X-RapidAPI-Key': '26a8d052edmsha2713367865c9a8p16d580jsn07ba66450d83',
-    //         'X-RapidAPI-Host': 'covid-19-statistics.p.rapidapi.com'
-    //     }
-    // };
+    const [country, setCountry] = useState('');
+    const [filteredData, setFilteredData] = useState();
 
     const url = 'https://covid-193.p.rapidapi.com/statistics';
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '26a8d052edmsha2713367865c9a8p16d580jsn07ba66450d83',
-            'X-RapidAPI-Host': 'covid-193.p.rapidapi.com'
+            'X-RapidAPI-Key': import.meta.env.VITE_API_KEY,
+            'X-RapidAPI-Host': import.meta.env.VITE_API_HOST
         }
     };
     const fetchData = async () => {
@@ -32,15 +20,27 @@ const StatePage = () => {
             const urlResponse = await fetch(url, options);
             const result = await urlResponse.json();
             setData(result.response);
-            console.log(data);
         } catch (error) {
             console.error(error);
         }
     }
 
+    const filterCountryData = () => {
+        const filter = data.filter((item) => {
+            return item.country.toLowerCase() === country.toLowerCase();
+        })
+        setCountry('');
+        setFilteredData(filter);
+    }
+
     useEffect(() => {
         fetchData();
-    });
+    }, []);
+
+    useEffect(() => {
+        setData(filteredData);
+    }, [filteredData])
+
 
     if (data === undefined) {
         return (
@@ -53,9 +53,9 @@ const StatePage = () => {
     return (
         <div className="text-xl py-4 px-6 flex flex-col gap-4">
             <div className="flex gap-6 items-center justify-center my-6">
-                <input type="text" name="" id="" className="py-2 px-4 border-none outline-none text-[16px]" placeholder="Search By Country Name" />
+                <input type="text" name="country" id="country" className="py-2 px-4 border-none outline-none text-[16px]" placeholder="Search By Country Name" onChange={(e) => setCountry(e.target.value)} />
                 <div className="cursor-pointer">
-                    <IoSearchCircle className="w-[40px] h-[40px] hover:scale-125 ease-in-out duration-200" />
+                    <IoSearchCircle className="w-[40px] h-[40px] hover:scale-125 ease-in-out duration-200" onClick={filterCountryData} />
                 </div>
             </div>
             {data.map((item, index) => (
