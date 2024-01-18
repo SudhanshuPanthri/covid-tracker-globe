@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { IoSearchCircle } from "react-icons/io5";
+import { PiSpinnerBold } from "react-icons/pi";
 
 const StatePage = () => {
     const [data, setData] = useState();
@@ -42,22 +44,22 @@ const StatePage = () => {
 
     if (data === undefined) {
         return (
-            <div className="flex items-center justify-center h-[80vh] fill-white">
-                <img src="../../../public/spinner-svgrepo-com.svg" alt="spinner" className="animate-spin w-[40px] h-[40px]" />
+            <div className="flex items-center justify-center h-[80vh]">
+                <PiSpinnerBold className="animate-spin w-[40px] h-[40px] fill-current text-white" />
             </div>
         )
     }
 
     return (
         <div className="text-xl py-4 px-6 flex flex-col gap-4">
-            <div className="flex gap-6 items-center justify-center">
+            <div className="flex gap-6 items-center justify-center my-6">
                 <input type="text" name="" id="" className="py-2 px-4 border-none outline-none text-[16px]" placeholder="Search By Country Name" />
                 <div className="cursor-pointer">
-                    <img src="../../../public/search-alt-2-svgrepo-com.svg" alt="Search" className="w-[30px] h-[30px] fill-slate-50 hover:scale-125 ease-in-out duration-200" />
+                    <IoSearchCircle className="w-[40px] h-[40px] hover:scale-125 ease-in-out duration-200" />
                 </div>
             </div>
             {data.map((item, index) => (
-                <div key={index} className="border border-white py-6 px-4 flex justify-between items-center">
+                <div key={index} className="bg-gray-900 py-6 px-4 flex justify-between items-center rounded-lg">
                     <div className="w-[15%]">
                         <h1>Continent</h1>
                         <h1>{item.continent}</h1>
