@@ -1,5 +1,3 @@
-
-
 const index = () => {
     return (
         <div>index</div>
